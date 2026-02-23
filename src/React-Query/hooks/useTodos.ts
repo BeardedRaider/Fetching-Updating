@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { CACHE_KEY_TODOS } from "../React-Query/constants";
+import APIClient from "../services/apiClient";
+import { CACHE_KEY_TODOS } from "../constants";
+
+const apiClient = new APIClient<Todo>("/todos");
 
 export interface Todo {
   id: number;
@@ -10,14 +12,11 @@ export interface Todo {
 }
 
 const useTodos = () => {
-  const fetchTodos = () =>
-    axios
-      .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => res.data);
+
 
   return useQuery<Todo[], Error>({
     queryKey: CACHE_KEY_TODOS,
-    queryFn: fetchTodos,
+    queryFn: apiClient.getAll.bind(apiClient),
     staleTime: 10 * 1000, // 10Sec - this is the time in milliseconds that the data will be considered fresh. During this time, the data will not be refetched when the component mounts or when the window is refocused. This can help to improve performance and reduce unnecessary network requests.
   });
 };

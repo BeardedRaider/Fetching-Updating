@@ -1,4 +1,4 @@
-import useTodos from "../hooks/useTodos";
+import useTodos from "./hooks/useTodos";
 
 const TodoList = () => {
   // we can use the useTodos hook to fetch the list of todos and handle the loading and error states in our component. The useQuery hook returns an object that contains the data, error, and isLoading properties, which we can use to manage the state of our component accordingly. 
